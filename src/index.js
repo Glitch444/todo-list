@@ -1,15 +1,16 @@
 import "./style.css"
 
+
 class ListItem {
     constructor(body, id = null) {
         this.body = body;
-
-        this.displayDiv = null; // placeholder for the displayDiv element
+        this.id = id || this.generateUniqueId();
+        this.displayDiv = null; 
         this.displayP = null
         this.saveBtn = null;
         this.editBtn = null;
         this.removeBtn = null;
-        this.id = id || this.generateUniqueId();
+       
     }
 
     generateUniqueId() {
@@ -29,7 +30,8 @@ class ListItem {
         this.displayDiv.appendChild(this.editBtn);
         this.displayDiv.appendChild(this.removeBtn);
 
-        this.displayDiv.classList.add("display-div")
+        this.displayDiv.classList.add("display-div");
+        this.displayDiv.dataset.id = this.id; 
 
         this.displayP.textContent = this.body;
         this.saveBtn.textContent = "save";
@@ -44,12 +46,6 @@ class ListItem {
 
     }
     
-    edit() {
-
-    }
-    save(){
-
-    }
 }
 
 const list = document.getElementById("list");
@@ -79,10 +75,53 @@ clearBtn.addEventListener("click", () => {
     listItemInput.value = "";
 });
 
+let myStorage = JSON.parse(localStorage.getItem("myStorage")) || [];
 
-saveBtn.addEventListener("click", saveListItem);
+myStorage.forEach(item => {
+    let listItem = new ListItem(item.body, item.id);
+    listItem.display();
+})
 
-function saveListItem(){
+let draggedItem = null;
+
+function addDragAndDrop() {
+    const items = document.querySelectorAll(".display-div");
+
+    items.forEach(item => {
+        item.draggable = true; 
+        item.addEventListener("dragstart", () => {
+            draggedItem = item; 
+        });
+    });
+
+    list.addEventListener("dragstart", (event) => {
+        draggedItem = event.target;
+        event.dataTransfer.effectAllowed = "move";
+    });
+    
+    list.addEventListener("dragover", (event) => {
+        event.preventDefault();
+        event.dataTransfer.dropEffect = "move";
+    });
+    
+    list.addEventListener("drop", (event) => {
+        event.preventDefault();
+        if (event.target !== draggedItem && event.target.closest(".display-div")) {
+            const targetItem = event.target.closest(".display-div");
+            
+            reorderItems(draggedItem, targetItem);
+
+            updateLocalStorage();
+        }
+    });
+}
+
+function updateLocalStorage() {
+    localStorage.setItem("myStorage", JSON.stringify(myStorage));
+}
+
+
+saveBtn.addEventListener("click", () => {
     let newListItem = new ListItem(listItemInput.value);
 
     myStorage.push({body: newListItem.body, id: newListItem.id});
@@ -90,16 +129,33 @@ function saveListItem(){
     localStorage.setItem("myStorage", JSON.stringify(myStorage));
 
     newListItem.display();
-};
+
+    updateLocalStorage();
+});
 
 
+function reorderItems(draggedItem, targetItem) {    
+    const draggedIndex = Array.from(list.children).indexOf(draggedItem);
+    const targetIndex = Array.from(list.children).indexOf(targetItem);
 
-let myStorage = JSON.parse(localStorage.getItem("myStorage")) || [];
+    if (draggedIndex > targetIndex) {
+        list.insertBefore(draggedItem, targetItem);
+    } else {
+        list.insertBefore(draggedItem, targetItem.nextSibling);
+    }
 
-myStorage.forEach(item => {
-    let listItem = new ListItem(item.body, item.id);
-    listItem.display();
-})
+    // Reorder the data in the array
+    const draggedId = draggedItem.dataset.id;
+    const targetId = targetItem.dataset.id;
+    const draggedData = myStorage.find(item => item.id === draggedId);
+    const targetIndexInStorage = myStorage.findIndex(item => item.id === targetId);
+
+    myStorage.splice(myStorage.indexOf(draggedData), 1);
+    myStorage.splice(targetIndexInStorage, 0, draggedData);
+}
+
+
+addDragAndDrop();
 
 
 
