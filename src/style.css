@@ -19,7 +19,11 @@
     border: 1px solid red;
     width: 100%;
     text-align: center;
+    margin-bottom: 20px;
 }
+
+
+
 
 #add-list-item {
     border: 1px solid red;
