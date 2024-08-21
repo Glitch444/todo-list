@@ -1,87 +1,11 @@
 import "./style.css"
 
+import { ListItem } from "./ListItem.js";
 
-class ListItem {
-    constructor(body, id = null) {
-        this.body = body;
-        this.id = id || this.generateUniqueId();
-        this.displayDiv = null; 
-        this.displayP = null
-        this.saveBtn = null;
-        this.editBtn = null;
-        this.removeBtn = null;
-        this.displayInput = null;
-       
-    }
+import { getStorage, saveStorage } from "./storage.js";
 
-    generateUniqueId() {
-        return "id-" + Date.now() + "-" + Math.floor(Math.random()*1000);
-    }
 
-    display() {
-        this.displayDiv = document.createElement("div");
-        this.displayP = document.createElement("p");
-        this.saveBtn = document.createElement("button");
-        this.editBtn = document.createElement("button");
-        this.removeBtn = document.createElement("button");
-
-        list.appendChild(this.displayDiv);
-        this.displayDiv.appendChild(this.displayP);
-        this.displayDiv.appendChild(this.saveBtn);
-        this.displayDiv.appendChild(this.editBtn);
-        this.displayDiv.appendChild(this.removeBtn);
-
-        this.displayDiv.classList.add("display-div");
-        this.displayDiv.dataset.id = this.id; 
-
-        this.displayP.textContent = this.body;
-        this.saveBtn.textContent = "save";
-        this.editBtn.textContent = "edit";
-        this.removeBtn.textContent = "X";
-
-        this.removeBtn.addEventListener("click", () => {
-            this.displayDiv.remove();
-            myStorage = myStorage.filter(item => item.id != this.id);
-            localStorage.setItem("myStorage", JSON.stringify(myStorage));
-        });
-
-        this.editBtn.addEventListener("click", () => {
-            this.edit(this.displayDiv, this.displayP);
-        });
-
-        this.saveBtn.addEventListener("click", () => {
-            this.save(this.displayDiv);
-        })
-    }
-
-    edit(displayDiv, displayP) { 
-        this.displayInput = document.createElement("input");
-        this.displayInput.value = displayP.textContent;
-        
-        displayDiv.prepend(this.displayInput);
-        displayP.remove();
-
-        return this.displayInput;
-    }
-
-    save(displayDiv) {
-        this.displayP = document.createElement("p");
-        this.displayP.textContent = this.displayInput.value;
-
-        displayDiv.prepend(this.displayP);
-        this.displayInput.remove();
-
-        this.body = this.displayInput.value;
-
-        let storedItem = myStorage.find(item => item.id === this.id)
-        storedItem.body = this.body;
-
-        localStorage.setItem("myStorage", JSON.stringify(myStorage));
-    }
-    
-}
-
-const list = document.getElementById("list");
+const listGroups = document.getElementById("list-groups");
 
 const showHideBtn = document.getElementById("show-hide-btn");
 
@@ -90,30 +14,44 @@ const listItemInput = document.getElementById("list-item-input");
 const saveBtn = document.getElementById("save-btn");
 const clearBtn = document.getElementById("clear-btn");
 
+const list = document.getElementById("list");
+
+
+getStorage().forEach(item => {
+    let listItem = new ListItem(item.body, item.id, list);
+    listItem.display();
+});
+
+
 showHideBtn.addEventListener("click", () => {
-    if (addListItem.style.display === "none") {
+    if (addListItem.style.display === "none" || addListItem.style.display === "") {
         addListItem.style.display = "flex";
         showHideBtn.textContent = "Don't add new item";
-        showHideBtn.style.marginBottom = "0px";
+
     } 
     else {
         addListItem.style.display = "none";
         showHideBtn.textContent = "Add new item";
-        showHideBtn.style.marginBottom = "20px";
     }
 });
-
 
 clearBtn.addEventListener("click", () => {
     listItemInput.value = "";
 });
 
-let myStorage = JSON.parse(localStorage.getItem("myStorage")) || [];
+saveBtn.addEventListener("click", () => {
+    let newListItem = new ListItem(listItemInput.value, null, list);
+    
+    let myStorage = getStorage();
+    myStorage.push({body: newListItem.body, id: newListItem.id});
+   
+    saveStorage(myStorage);
+    
+    newListItem.display();
 
-myStorage.forEach(item => {
-    let listItem = new ListItem(item.body, item.id);
-    listItem.display();
-})
+    addDragAndDrop();
+});
+
 
 let draggedItem = null;
 
@@ -150,21 +88,8 @@ function addDragAndDrop() {
 }
 
 function updateLocalStorage() {
-    localStorage.setItem("myStorage", JSON.stringify(myStorage));
-}
-
-
-saveBtn.addEventListener("click", () => {
-    let newListItem = new ListItem(listItemInput.value);
-
-    myStorage.push({body: newListItem.body, id: newListItem.id});
-
-    localStorage.setItem("myStorage", JSON.stringify(myStorage));
-
-    newListItem.display();
-
-    updateLocalStorage();
-});
+    saveStorage(getStorage());
+};
 
 
 function reorderItems(draggedItem, targetItem) {    
@@ -180,14 +105,40 @@ function reorderItems(draggedItem, targetItem) {
     // Reorder the data in the array
     const draggedId = draggedItem.dataset.id;
     const targetId = targetItem.dataset.id;
-    const draggedData = myStorage.find(item => item.id === draggedId);
-    const targetIndexInStorage = myStorage.findIndex(item => item.id === targetId);
+    const draggedData = getStorage().find(item => item.id === draggedId);
+    const targetIndexInStorage = getStorage().findIndex(item => item.id === targetId);
 
+    let myStorage = getStorage();
     myStorage.splice(myStorage.indexOf(draggedData), 1);
     myStorage.splice(targetIndexInStorage, 0, draggedData);
+    saveStorage(myStorage);
 }
 
 addDragAndDrop();
+
+
+
+let isGroups = false;
+
+function newGroup() {
+    if(!isGroups) {
+         isGroups = true;
+        const group = document.createElement("div");
+
+        group.textContent = "Untitled-1"
+
+        listGroups.appendChild(group);
+
+        console.log("no group")
+    } 
+    else {
+       
+
+        const createListGroupBtn = document.createElement("button");
+
+        createListGroupBtn.textContent = "Add new list group";
+    }
+};
 
 
 
