@@ -10,6 +10,7 @@ class ListItem {
         this.saveBtn = null;
         this.editBtn = null;
         this.removeBtn = null;
+        this.displayInput = null;
        
     }
 
@@ -42,8 +43,40 @@ class ListItem {
             this.displayDiv.remove();
             myStorage = myStorage.filter(item => item.id != this.id);
             localStorage.setItem("myStorage", JSON.stringify(myStorage));
-        })
+        });
 
+        this.editBtn.addEventListener("click", () => {
+            this.edit(this.displayDiv, this.displayP);
+        });
+
+        this.saveBtn.addEventListener("click", () => {
+            this.save(this.displayDiv);
+        })
+    }
+
+    edit(displayDiv, displayP) { 
+        this.displayInput = document.createElement("input");
+        this.displayInput.value = displayP.textContent;
+        
+        displayDiv.prepend(this.displayInput);
+        displayP.remove();
+
+        return this.displayInput;
+    }
+
+    save(displayDiv) {
+        this.displayP = document.createElement("p");
+        this.displayP.textContent = this.displayInput.value;
+
+        displayDiv.prepend(this.displayP);
+        this.displayInput.remove();
+
+        this.body = this.displayInput.value;
+
+        let storedItem = myStorage.find(item => item.id === this.id)
+        storedItem.body = this.body;
+
+        localStorage.setItem("myStorage", JSON.stringify(myStorage));
     }
     
 }
@@ -153,7 +186,6 @@ function reorderItems(draggedItem, targetItem) {
     myStorage.splice(myStorage.indexOf(draggedData), 1);
     myStorage.splice(targetIndexInStorage, 0, draggedData);
 }
-
 
 addDragAndDrop();
 
