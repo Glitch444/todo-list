@@ -6,7 +6,7 @@
 
 #main-container {
     height: 100vh;
-    background-color: hsl(60, 78%, 85%);
+    background-color: #f7f7bb;
     display: flex;
     flex-direction: column;
 }
@@ -22,6 +22,20 @@
 
 }
 
+#list-groups {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    max-width: 100%;
+}
+
+.group-div{
+    border: 1px solid blue;
+}
+
+#add-group{
+    display: none;
+}
 
 
 
