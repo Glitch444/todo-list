@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "homepage": "https://glitch444.github.io/todo-list/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Glitch444/todo-list"
+  },
   "scripts": {
     "build": "webpack",
     "start": "webpack serve --open",
