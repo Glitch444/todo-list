@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   entry: './src/index.js',
@@ -12,16 +13,19 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.css$/, // Apply this rule to .css files
-        use: ['style-loader', 'css-loader'], // Use these loaders for .css files
+        test: /\.css$/, 
+        use: [
+          MiniCssExtractPlugin.loader,
+          , 'css-loader',
+        ], 
       },
       {
-        test: /\.(png|svg|jpg|jpeg|gif)$/i, // Apply this rule to image files
-        type: 'asset/resource', // Use the file-loader to process image files
+        test: /\.(png|svg|jpg|jpeg|gif)$/i, 
+        type: 'asset/resource', 
       },
       {
-        test: /\.(woff|woff2|eot|ttf|otf)$/i, // Apply this rule to font files
-        type: 'asset/resource', // Use the file-loader to process font files
+        test: /\.(woff|woff2|eot|ttf|otf)$/i, 
+        type: 'asset/resource', 
       },
     ],
   },
@@ -29,8 +33,12 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html',
-      filename: 'index.html',
     }),
+
+    new MiniCssExtractPlugin({
+      filename: '[name].css',
+    }),
+
   ],
   
   devServer: {
