@@ -9,16 +9,6 @@ module.exports = {
     publicPath: '/',
   },
 
-  mode: 'development',
-  
-  devServer: {
-    static: {
-      directory: path.join(__dirname, 'dist'),
-    },
-    open: true,
-    hot: true,
-  },
-
   module: {
     rules: [
       {
@@ -38,7 +28,18 @@ module.exports = {
 
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html',
+      template: './index.html',
     }),
   ],
+  
+  devServer: {
+    static: {
+      directory: path.join(__dirname, 'dist'),
+    },
+    open: true,
+    hot: true,
+  },
+
+
+  mode: 'development',
 };
