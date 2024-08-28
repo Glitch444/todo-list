@@ -1,2 +1,457 @@
-(()=>{"use strict";var t=JSON.parse(localStorage.getItem("myStorage"))||[];function e(){return t}function n(e){t=e,localStorage.setItem("myStorage",JSON.stringify(t))}var i=JSON.parse(localStorage.getItem("myGroups"))||[];function r(){return i}function o(t){i=t,localStorage.setItem("myGroups",JSON.stringify(i))}function a(t){return a="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},a(t)}function d(t,e){for(var n=0;n<e.length;n++){var i=e[n];i.enumerable=i.enumerable||!1,i.configurable=!0,"value"in i&&(i.writable=!0),Object.defineProperty(t,l(i.key),i)}}function l(t){var e=function(t){if("object"!=a(t)||!t)return t;var e=t[Symbol.toPrimitive];if(void 0!==e){var n=e.call(t,"string");if("object"!=a(n))return n;throw new TypeError("@@toPrimitive must return a primitive value.")}return String(t)}(t);return"symbol"==a(e)?e:e+""}var s=function(){return t=function t(e){var n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:null,i=arguments.length>2?arguments[2]:void 0;!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,t),this.body=e,this.id=n||this.generateUniqueId(),this.displayDiv=null,this.displayP=null,this.saveBtn=null,this.editBtn=null,this.removeBtn=null,this.displayInput=null,this.list=i},i=[{key:"generateUniqueId",value:function(){return"id-"+Date.now()+"-"+Math.floor(1e3*Math.random())}},{key:"display",value:function(){var t=this;this.displayDiv=document.createElement("div"),this.displayP=document.createElement("p"),this.saveBtn=document.createElement("button"),this.editBtn=document.createElement("button"),this.removeBtn=document.createElement("button"),this.list.appendChild(this.displayDiv),this.displayDiv.appendChild(this.displayP),this.displayDiv.appendChild(this.saveBtn),this.displayDiv.appendChild(this.editBtn),this.displayDiv.appendChild(this.removeBtn),this.displayDiv.classList.add("display-div"),this.displayDiv.dataset.id=this.id,this.displayP.textContent=this.body,this.saveBtn.textContent="save",this.editBtn.textContent="edit",this.removeBtn.textContent="X",this.removeBtn.addEventListener("click",(function(){t.displayDiv.remove();var i=e();n(i=i.filter((function(e){return e.id!=t.id})))})),this.editBtn.addEventListener("click",(function(){t.edit(t.displayDiv,t.displayP)})),this.saveBtn.addEventListener("click",(function(){t.save(t.displayDiv)}))}},{key:"edit",value:function(t,e){return this.displayInput=document.createElement("input"),this.displayInput.value=e.textContent,t.prepend(this.displayInput),e.remove(),this.displayInput}},{key:"save",value:function(t){var i=this;this.displayP=document.createElement("p"),this.displayP.textContent=this.displayInput.value,t.prepend(this.displayP),this.displayInput.remove(),this.body=this.displayInput.value;var r=e(),o=r.find((function(t){return t.id===i.id}));o&&(o.body=this.body,n(r))}}],i&&d(t.prototype,i),Object.defineProperty(t,"prototype",{writable:!1}),t;var t,i}();function u(t){return u="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},u(t)}function c(t,e){for(var n=0;n<e.length;n++){var i=e[n];i.enumerable=i.enumerable||!1,i.configurable=!0,"value"in i&&(i.writable=!0),Object.defineProperty(t,p(i.key),i)}}function p(t){var e=function(t){if("object"!=u(t)||!t)return t;var e=t[Symbol.toPrimitive];if(void 0!==e){var n=e.call(t,"string");if("object"!=u(n))return n;throw new TypeError("@@toPrimitive must return a primitive value.")}return String(t)}(t);return"symbol"==u(e)?e:e+""}var v=document.getElementById("list-groups"),f=document.getElementById("add-group"),y=document.getElementById("show-hide-btn"),h=document.getElementById("add-list-item"),m=document.getElementById("list-item-input"),g=document.getElementById("save-btn"),b=document.getElementById("clear-btn"),E=document.getElementById("list"),B=function(){function t(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:t.generateGroupName(),n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:null;!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,t),this.title=e,this.id=n||this.generateUniqueId(),this.groupDiv=null,this.groupP=null,this.saveBtn=null}return e=t,n=[{key:"generateUniqueId",value:function(){return"group-"+Date.now()+"-"+Math.floor(1e3*Math.random())}},{key:"displayGroup",value:function(t){this.groupDiv=document.createElement("div"),this.groupP=document.createElement("p"),this.groupDiv.dataset.id=this.id,this.groupDiv.classList.add("group-div"),this.groupP.textContent=this.title,this.saveBtn=document.createElement("button"),this.saveBtn.textContent="save",this.groupDiv.appendChild(this.groupP),this.groupDiv.appendChild(this.saveBtn),t.appendChild(this.groupDiv),this.groupDiv.draggable=!0}}],i=[{key:"updateGroupCounter",value:function(){return document.querySelectorAll(".group-div").length}},{key:"generateGroupName",value:function(){var e=t.updateGroupCounter();return"Untitled-".concat(e+1)}}],n&&c(e.prototype,n),i&&c(e,i),Object.defineProperty(e,"prototype",{writable:!1}),e;var e,n,i}();function S(){var t=document.querySelectorAll(".group-div");f.style.display=t.length>0?"block":"none"}y.addEventListener("click",(function(){"none"===h.style.display||""===h.style.display?(h.style.display="flex",y.textContent="Don't add new item"):(h.style.display="none",y.textContent="Add new item")})),b.addEventListener("click",(function(){m.value=""})),g.addEventListener("click",(function(){var t=new s(m.value,null,E),i=e();i.push({body:t.body,id:t.id}),n(i),t.display(),I(),function(){if(!w){w=!0;var t=new B;t.displayGroup(v);var e=r();e.push({title:t.title,id:t.id}),o(e),S()}}()}));var D=null;function I(){document.querySelectorAll(".display-div").forEach((function(t){t.draggable=!0,t.addEventListener("dragstart",(function(t){D=t.target}))})),E.addEventListener("dragstart",(function(t){D=t.target.closest(".display-div"),t.dataTransfer.effectAllowed="move"})),E.addEventListener("dragover",(function(t){t.preventDefault(),t.dataTransfer.dropEffect="move"})),E.addEventListener("drop",(function(t){if(t.preventDefault(),t.target.closest(".display-div")){var i=t.target.closest(".display-div");D!==i&&(function(t,i){Array.from(E.children).indexOf(t)>Array.from(E.children).indexOf(i)?E.insertBefore(t,i):E.insertBefore(t,i.nextSibling);var r=t.dataset.id,o=i.dataset.id,a=e().find((function(t){return t.id===r})),d=e().findIndex((function(t){return t.id===o})),l=e();l.splice(l.indexOf(a),1),l.splice(d,0,a),n(l)}(D,i),n(e()))}}))}var w=!1;f.addEventListener("click",(function(){var t=new B;t.displayGroup(v);var e=r();e.push({title:t.title,id:t.id}),o(e),S()})),e().forEach((function(t){new s(t.body,t.id,E).display(v)})),r().forEach((function(t){var e=new B(t.title,t.id);console.log(e),e.displayGroup(v)})),I(),document.querySelectorAll(".group-div").forEach((function(t){t.draggable=!0,t.addEventListener("dragstart",(function(t){D=t.target}))})),v.addEventListener("dragstart",(function(t){D=t.target.closest(".group-div"),t.dataTransfer.effectAllowed="move"})),v.addEventListener("dragover",(function(t){t.preventDefault(),t.dataTransfer.dropEffect="move"})),v.addEventListener("drop",(function(t){if(t.preventDefault(),t.target.closest(".group-div")){var e=t.target.closest(".group-div");D!==e&&(function(t,e){Array.from(v.children).indexOf(t)>Array.from(v.children).indexOf(e)?v.insertBefore(t,e):v.insertBefore(t,e.nextSibling);var n=t.dataset.id,i=e.dataset.id,a=r().find((function(t){return t.id===n})),d=r().findIndex((function(t){return t.id===i})),l=r();l.splice(l.indexOf(a),1),l.splice(d,0,a),o(l)}(D,e),o(r()))}})),S(),console.log(e()),console.log(r())})();
+/******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	var __webpack_modules__ = ({
+
+/***/ "./src/ListItem.js":
+/*!*************************!*\
+  !*** ./src/ListItem.js ***!
+  \*************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ListItem: () => (/* binding */ ListItem)
+/* harmony export */ });
+/* harmony import */ var _storage_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./storage.js */ "./src/storage.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
+var ListItem = /*#__PURE__*/function () {
+  function ListItem(body) {
+    var id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+    var list = arguments.length > 2 ? arguments[2] : undefined;
+    _classCallCheck(this, ListItem);
+    this.body = body;
+    this.id = id || this.generateUniqueId();
+    this.displayDiv = null;
+    this.displayP = null;
+    this.saveBtn = null;
+    this.editBtn = null;
+    this.removeBtn = null;
+    this.displayInput = null;
+    this.list = list;
+  }
+  return _createClass(ListItem, [{
+    key: "generateUniqueId",
+    value: function generateUniqueId() {
+      return "id-" + Date.now() + "-" + Math.floor(Math.random() * 1000);
+    }
+  }, {
+    key: "display",
+    value: function display() {
+      var _this = this;
+      this.displayDiv = document.createElement("div");
+      this.displayP = document.createElement("p");
+      this.saveBtn = document.createElement("button");
+      this.editBtn = document.createElement("button");
+      this.removeBtn = document.createElement("button");
+      this.list.appendChild(this.displayDiv);
+      this.displayDiv.appendChild(this.displayP);
+      this.displayDiv.appendChild(this.saveBtn);
+      this.displayDiv.appendChild(this.editBtn);
+      this.displayDiv.appendChild(this.removeBtn);
+      this.displayDiv.classList.add("display-div");
+      this.displayDiv.dataset.id = this.id;
+      this.displayP.textContent = this.body;
+      this.saveBtn.textContent = "save";
+      this.editBtn.textContent = "edit";
+      this.removeBtn.textContent = "X";
+      this.removeBtn.addEventListener("click", function () {
+        _this.displayDiv.remove();
+        var myStorage = (0,_storage_js__WEBPACK_IMPORTED_MODULE_0__.getStorage)();
+        myStorage = myStorage.filter(function (item) {
+          return item.id != _this.id;
+        });
+        (0,_storage_js__WEBPACK_IMPORTED_MODULE_0__.saveStorage)(myStorage);
+      });
+      this.editBtn.addEventListener("click", function () {
+        _this.edit(_this.displayDiv, _this.displayP);
+      });
+      this.saveBtn.addEventListener("click", function () {
+        _this.save(_this.displayDiv);
+      });
+    }
+  }, {
+    key: "edit",
+    value: function edit(displayDiv, displayP) {
+      this.displayInput = document.createElement("input");
+      this.displayInput.value = displayP.textContent;
+      displayDiv.prepend(this.displayInput);
+      displayP.remove();
+      return this.displayInput;
+    }
+  }, {
+    key: "save",
+    value: function save(displayDiv) {
+      var _this2 = this;
+      this.displayP = document.createElement("p");
+      this.displayP.textContent = this.displayInput.value;
+      displayDiv.prepend(this.displayP);
+      this.displayInput.remove();
+      this.body = this.displayInput.value;
+      var myStorage = (0,_storage_js__WEBPACK_IMPORTED_MODULE_0__.getStorage)();
+      var storedItem = myStorage.find(function (item) {
+        return item.id === _this2.id;
+      });
+      if (storedItem) {
+        storedItem.body = this.body;
+        (0,_storage_js__WEBPACK_IMPORTED_MODULE_0__.saveStorage)(myStorage);
+      }
+    }
+  }]);
+}();
+
+/***/ }),
+
+/***/ "./src/storage.js":
+/*!************************!*\
+  !*** ./src/storage.js ***!
+  \************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getGroups: () => (/* binding */ getGroups),
+/* harmony export */   getStorage: () => (/* binding */ getStorage),
+/* harmony export */   saveGroups: () => (/* binding */ saveGroups),
+/* harmony export */   saveStorage: () => (/* binding */ saveStorage)
+/* harmony export */ });
+var myStorage = JSON.parse(localStorage.getItem("myStorage")) || [];
+function getStorage() {
+  return myStorage;
+}
+function saveStorage(updatedStorage) {
+  myStorage = updatedStorage;
+  localStorage.setItem("myStorage", JSON.stringify(myStorage));
+}
+
+// groups
+var myGroups = JSON.parse(localStorage.getItem("myGroups")) || [];
+function getGroups() {
+  return myGroups;
+}
+function saveGroups(updateGroups) {
+  myGroups = updateGroups;
+  localStorage.setItem("myGroups", JSON.stringify(myGroups));
+}
+
+/***/ }),
+
+/***/ "./src/style.css":
+/*!***********************!*\
+  !*** ./src/style.css ***!
+  \***********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+/*!**********************!*\
+  !*** ./src/index.js ***!
+  \**********************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.css */ "./src/style.css");
+/* harmony import */ var _ListItem_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ListItem.js */ "./src/ListItem.js");
+/* harmony import */ var _storage_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./storage.js */ "./src/storage.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
+
+
+var listGroups = document.getElementById("list-groups");
+var addGroupBtn = document.getElementById("add-group");
+var showHideBtn = document.getElementById("show-hide-btn");
+var addListItem = document.getElementById("add-list-item");
+var listItemInput = document.getElementById("list-item-input");
+var saveBtn = document.getElementById("save-btn");
+var clearBtn = document.getElementById("clear-btn");
+var list = document.getElementById("list");
+var Group = /*#__PURE__*/function () {
+  function Group() {
+    var title = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : Group.generateGroupName();
+    var id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+    _classCallCheck(this, Group);
+    this.title = title;
+    this.id = id || this.generateUniqueId();
+    this.groupDiv = null;
+    this.groupP = null;
+    this.saveBtn = null;
+  }
+  return _createClass(Group, [{
+    key: "generateUniqueId",
+    value: function generateUniqueId() {
+      return "group-" + Date.now() + "-" + Math.floor(Math.random() * 1000);
+    }
+  }, {
+    key: "displayGroup",
+    value: function displayGroup(listGroups) {
+      this.groupDiv = document.createElement("div");
+      this.groupP = document.createElement("p");
+      this.groupDiv.dataset.id = this.id;
+      this.groupDiv.classList.add("group-div");
+      this.groupP.textContent = this.title;
+      this.saveBtn = document.createElement("button");
+      this.saveBtn.textContent = "save";
+      this.groupDiv.appendChild(this.groupP);
+      this.groupDiv.appendChild(this.saveBtn);
+      listGroups.appendChild(this.groupDiv);
+      this.groupDiv.draggable = true;
+    }
+  }], [{
+    key: "updateGroupCounter",
+    value: function updateGroupCounter() {
+      var groupDivs = document.querySelectorAll(".group-div");
+      return groupDivs.length;
+    }
+  }, {
+    key: "generateGroupName",
+    value: function generateGroupName() {
+      var groupCounter = Group.updateGroupCounter();
+      return "Untitled-".concat(groupCounter + 1);
+    }
+  }]);
+}();
+function updateAddGroupButtonVisibility() {
+  var groupDivs = document.querySelectorAll(".group-div");
+  addGroupBtn.style.display = groupDivs.length > 0 ? "block" : "none";
+}
+showHideBtn.addEventListener("click", function () {
+  if (addListItem.style.display === "none" || addListItem.style.display === "") {
+    addListItem.style.display = "flex";
+    showHideBtn.textContent = "Don't add new item";
+  } else {
+    addListItem.style.display = "none";
+    showHideBtn.textContent = "Add new item";
+  }
+});
+clearBtn.addEventListener("click", function () {
+  listItemInput.value = "";
+});
+saveBtn.addEventListener("click", function () {
+  var newListItem = new _ListItem_js__WEBPACK_IMPORTED_MODULE_1__.ListItem(listItemInput.value, null, list);
+  var myStorage = (0,_storage_js__WEBPACK_IMPORTED_MODULE_2__.getStorage)();
+  myStorage.push({
+    body: newListItem.body,
+    id: newListItem.id
+  });
+  (0,_storage_js__WEBPACK_IMPORTED_MODULE_2__.saveStorage)(myStorage);
+  newListItem.display();
+  addDragAndDropToListItems();
+  newGroup();
+});
+var draggedItem = null;
+function addDragAndDropToListItems() {
+  var items = document.querySelectorAll(".display-div");
+  items.forEach(function (item) {
+    item.draggable = true;
+    item.addEventListener("dragstart", function (event) {
+      draggedItem = event.target;
+    });
+  });
+  list.addEventListener("dragstart", function (event) {
+    draggedItem = event.target.closest(".display-div");
+    event.dataTransfer.effectAllowed = "move";
+  });
+  list.addEventListener("dragover", function (event) {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = "move";
+  });
+  list.addEventListener("drop", function (event) {
+    event.preventDefault();
+    if (event.target.closest(".display-div")) {
+      var targetItem = event.target.closest(".display-div");
+      if (draggedItem !== targetItem) {
+        reorderItems(draggedItem, targetItem);
+        updateLocalStorage();
+      }
+    }
+  });
+}
+function addDragAndDropToGroups() {
+  var groups = document.querySelectorAll(".group-div");
+  groups.forEach(function (group) {
+    group.draggable = true;
+    group.addEventListener("dragstart", function (event) {
+      draggedItem = event.target;
+    });
+  });
+  listGroups.addEventListener("dragstart", function (event) {
+    draggedItem = event.target.closest(".group-div");
+    event.dataTransfer.effectAllowed = "move";
+  });
+  listGroups.addEventListener("dragover", function (event) {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = "move";
+  });
+  listGroups.addEventListener("drop", function (event) {
+    event.preventDefault();
+    if (event.target.closest(".group-div")) {
+      var targetGroup = event.target.closest(".group-div");
+      if (draggedItem !== targetGroup) {
+        reorderGroups(draggedItem, targetGroup);
+        updateGroupStorage();
+      }
+    }
+  });
+}
+function updateLocalStorage() {
+  (0,_storage_js__WEBPACK_IMPORTED_MODULE_2__.saveStorage)((0,_storage_js__WEBPACK_IMPORTED_MODULE_2__.getStorage)());
+}
+;
+function updateGroupStorage() {
+  (0,_storage_js__WEBPACK_IMPORTED_MODULE_2__.saveGroups)((0,_storage_js__WEBPACK_IMPORTED_MODULE_2__.getGroups)());
+}
+function reorderItems(draggedItem, targetItem) {
+  var draggedIndex = Array.from(list.children).indexOf(draggedItem);
+  var targetIndex = Array.from(list.children).indexOf(targetItem);
+  if (draggedIndex > targetIndex) {
+    list.insertBefore(draggedItem, targetItem);
+  } else {
+    list.insertBefore(draggedItem, targetItem.nextSibling);
+  }
+  var draggedId = draggedItem.dataset.id;
+  var targetId = targetItem.dataset.id;
+  var draggedData = (0,_storage_js__WEBPACK_IMPORTED_MODULE_2__.getStorage)().find(function (item) {
+    return item.id === draggedId;
+  });
+  var targetIndexInStorage = (0,_storage_js__WEBPACK_IMPORTED_MODULE_2__.getStorage)().findIndex(function (item) {
+    return item.id === targetId;
+  });
+  var myStorage = (0,_storage_js__WEBPACK_IMPORTED_MODULE_2__.getStorage)();
+  myStorage.splice(myStorage.indexOf(draggedData), 1);
+  myStorage.splice(targetIndexInStorage, 0, draggedData);
+  (0,_storage_js__WEBPACK_IMPORTED_MODULE_2__.saveStorage)(myStorage);
+}
+function reorderGroups(draggedGroup, targetGroup) {
+  var draggedIndex = Array.from(listGroups.children).indexOf(draggedGroup);
+  var targetIndex = Array.from(listGroups.children).indexOf(targetGroup);
+  if (draggedIndex > targetIndex) {
+    listGroups.insertBefore(draggedGroup, targetGroup);
+  } else {
+    listGroups.insertBefore(draggedGroup, targetGroup.nextSibling);
+  }
+  var draggedId = draggedGroup.dataset.id;
+  var targetId = targetGroup.dataset.id;
+  var draggedData = (0,_storage_js__WEBPACK_IMPORTED_MODULE_2__.getGroups)().find(function (group) {
+    return group.id === draggedId;
+  });
+  var targetIndexInStorage = (0,_storage_js__WEBPACK_IMPORTED_MODULE_2__.getGroups)().findIndex(function (group) {
+    return group.id === targetId;
+  });
+  var myGroups = (0,_storage_js__WEBPACK_IMPORTED_MODULE_2__.getGroups)();
+  myGroups.splice(myGroups.indexOf(draggedData), 1);
+  myGroups.splice(targetIndexInStorage, 0, draggedData);
+  (0,_storage_js__WEBPACK_IMPORTED_MODULE_2__.saveGroups)(myGroups);
+}
+var isGroups = false;
+function newGroup() {
+  if (!isGroups) {
+    isGroups = true;
+    var _newGroup = new Group();
+    _newGroup.displayGroup(listGroups);
+    var myGroups = (0,_storage_js__WEBPACK_IMPORTED_MODULE_2__.getGroups)();
+    myGroups.push({
+      title: _newGroup.title,
+      id: _newGroup.id
+    });
+    (0,_storage_js__WEBPACK_IMPORTED_MODULE_2__.saveGroups)(myGroups);
+    updateAddGroupButtonVisibility();
+  }
+}
+;
+addGroupBtn.addEventListener("click", function () {
+  var anotherGroup = new Group();
+  anotherGroup.displayGroup(listGroups);
+  var myGroups = (0,_storage_js__WEBPACK_IMPORTED_MODULE_2__.getGroups)();
+  myGroups.push({
+    title: anotherGroup.title,
+    id: anotherGroup.id
+  });
+  (0,_storage_js__WEBPACK_IMPORTED_MODULE_2__.saveGroups)(myGroups);
+  updateAddGroupButtonVisibility();
+});
+(0,_storage_js__WEBPACK_IMPORTED_MODULE_2__.getStorage)().forEach(function (item) {
+  var listItem = new _ListItem_js__WEBPACK_IMPORTED_MODULE_1__.ListItem(item.body, item.id, list);
+  listItem.display(listGroups);
+});
+(0,_storage_js__WEBPACK_IMPORTED_MODULE_2__.getGroups)().forEach(function (group) {
+  var listGroup = new Group(group.title, group.id);
+  console.log(listGroup);
+  listGroup.displayGroup(listGroups);
+});
+addDragAndDropToListItems();
+addDragAndDropToGroups();
+updateAddGroupButtonVisibility();
+console.log((0,_storage_js__WEBPACK_IMPORTED_MODULE_2__.getStorage)());
+console.log((0,_storage_js__WEBPACK_IMPORTED_MODULE_2__.getGroups)());
+/******/ })()
+;
 //# sourceMappingURL=bundle.js.map
