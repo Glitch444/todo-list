@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "homepage": "https://glitch444.github.io/todo-list/",
+  "homepage": ".",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Glitch444/todo-list"

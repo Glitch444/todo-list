@@ -56,7 +56,7 @@ module.exports = {
     hot: true,
   },
 
-  mode: 'development',
+  mode: 'production',
 
   devtool: 'source-map', // Enables source maps for easier debugging
 };
