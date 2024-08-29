@@ -1,7 +1,7 @@
 import { getStorage, saveStorage } from "./storage.js";
 
 export class ListItem {
-    constructor(body, id = null,list) {
+    constructor(body, id = null, list) {
         this.body = body;
         this.id = id || this.generateUniqueId();
         this.displayDiv = null; 
@@ -41,10 +41,11 @@ export class ListItem {
 
         this.removeBtn.addEventListener("click", () => {
             this.displayDiv.remove();
+
             let myStorage = getStorage();
-
-            myStorage = myStorage.filter(item => item.id != this.id);
-
+            myStorage = myStorage.filter((item) => {
+                return item.id != this.id}
+            );
             saveStorage(myStorage);
         });
 
@@ -77,7 +78,10 @@ export class ListItem {
         this.body = this.displayInput.value;
 
         let myStorage = getStorage();
-        let storedItem = myStorage.find(item => item.id === this.id)
+    
+        let storedItem = myStorage.find((item) => {
+            return item.id === this.id
+        });
         
         if (storedItem) {
             storedItem.body = this.body;

@@ -1,0 +1,55 @@
+/*!*****************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/style.css ***!
+  \*****************************************************************/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#main-container {
+    height: 100dvh;
+    background-color: #f7f7bb;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+#head-container {
+    background-color: hsl(0, 0%, 75%);
+}
+
+#show-hide-btn {
+    border: 1px solid red;
+    width: 100%;
+    text-align: center;
+
+}
+
+#list-groups {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    max-width: 100%;
+}
+
+.group-div{
+    border: 1px solid blue;
+}
+
+
+
+
+#add-list-item {
+    border: 1px solid red;
+
+}
+
+
+.display-div{
+    border: 1px solid blue;
+    display: flex;
+}
+
+
+/*# sourceMappingURL=main.css.map*/

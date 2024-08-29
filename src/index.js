@@ -5,7 +5,6 @@ import { ListItem } from "./ListItem.js";
 import { getStorage, saveStorage } from "./storage.js";
 
 
-
 const listItemInput = document.getElementById("list-item-input");
 const saveBtn = document.getElementById("save-btn");
 const clearBtn = document.getElementById("clear-btn");
@@ -19,16 +18,14 @@ clearBtn.addEventListener("click", () => {
 
 saveBtn.addEventListener("click", () => {
     let newListItem = new ListItem(listItemInput.value, null, list);
-    
+
     let myStorage = getStorage();
     myStorage.push({body: newListItem.body, id: newListItem.id});
-   
     saveStorage(myStorage);
     
     newListItem.display();
 
     addDragAndDropToListItems();
-
 });
 
 
@@ -64,12 +61,9 @@ function addDragAndDropToListItems() {
     });
 }
 
-
-
 function updateLocalStorage() {
     saveStorage(getStorage());
 };
-
 
 function reorderItems(draggedItem, targetItem) {
     const draggedIndex = Array.from(list.children).indexOf(draggedItem);
@@ -93,16 +87,10 @@ function reorderItems(draggedItem, targetItem) {
 }
 
 
-
-
 getStorage().forEach(item => {
     let listItem = new ListItem(item.body, item.id, list);
     listItem.display(listItem);
 });
 
-
-
 addDragAndDropToListItems();
 
-
-console.log(getStorage())
