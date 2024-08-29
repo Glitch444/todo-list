@@ -5,50 +5,60 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-#main-container {
-    height: 100dvh;
-    background-color: #f7f7bb;
-    display: flex;
-    flex-direction: column;
     
 }
 
-#head-container {
+body {
+    background-color: whitesmoke;
+    display: flex;
+    justify-content: center;
+    height: 100dvh;
+}
+
+#everything-container {
+    margin: 10px;
+    min-height: 90dvh;
+    max-width: 1000px;
+    border-radius: 10px;
+
+    background-color: #f7f7bb;
+    display: flex;
+    flex-direction: column;
+    flex: 1;    
+}
+
+h1 {
+    border-radius: 10px 10px 0px 0px;
     background-color: hsl(0, 0%, 75%);
-}
-
-#show-hide-btn {
-    border: 1px solid red;
-    width: 100%;
     text-align: center;
-
+    padding: 0px;
+    margin-bottom: 10px;
 }
 
-#list-groups {
+#main-container {
+    padding: 0 20px;
     display: flex;
-    overflow-x: auto;
-    white-space: nowrap;
-    max-width: 100%;
-}
-
-.group-div{
-    border: 1px solid blue;
+    flex-direction: column;
 }
 
 
+#add-list-item-container {
+    margin-bottom: 20px;
+}
 
-
-#add-list-item {
-    border: 1px solid red;
-
+#list-container {
+    
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 
 
-.display-div{
+.display-div {
+    padding: 5px;
     border: 1px solid blue;
     display: flex;
+    gap: 4px;
 }
 
 

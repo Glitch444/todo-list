@@ -6,19 +6,22 @@
     <title>To-do</title>
 <script defer src="bundle.js"></script><link href="main.css" rel="stylesheet"></head>
 <body>
-    <div id="main-container">
+
+    <div id="everything-container">
 
         <h1>To do:</h1>
+        <div id="main-container">
 
-        <div id="add-list-item">
-            <input type="text" id="list-item-input">
-            <button id="save-btn">Save</button>
-            <button id="clear-btn">Clear</button>
+            <div id="add-list-item-container">
+                <input type="text" id="list-item-input">
+                <button id="save-btn">Save</button>
+                <button id="clear-btn">Clear</button>
+            </div>
+
+            <div id="list-container"></div>
+
         </div>
-
-        <div id="list-container">
-        </div>
-
     </div>
+
 </body>
 </html>

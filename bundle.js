@@ -115,9 +115,7 @@ var ListItem = /*#__PURE__*/function () {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   getGroups: () => (/* binding */ getGroups),
 /* harmony export */   getStorage: () => (/* binding */ getStorage),
-/* harmony export */   saveGroups: () => (/* binding */ saveGroups),
 /* harmony export */   saveStorage: () => (/* binding */ saveStorage)
 /* harmony export */ });
 var myStorage = JSON.parse(localStorage.getItem("myStorage")) || [];
@@ -127,16 +125,6 @@ function getStorage() {
 function saveStorage(updatedStorage) {
   myStorage = updatedStorage;
   localStorage.setItem("myStorage", JSON.stringify(myStorage));
-}
-
-// groups
-var myGroups = JSON.parse(localStorage.getItem("myGroups")) || [];
-function getGroups() {
-  return myGroups;
-}
-function saveGroups(updateGroups) {
-  myGroups = updateGroups;
-  localStorage.setItem("myGroups", JSON.stringify(myGroups));
 }
 
 /***/ }),
@@ -296,7 +284,6 @@ function reorderItems(draggedItem, targetItem) {
   listItem.display(listItem);
 });
 addDragAndDropToListItems();
-console.log((0,_storage_js__WEBPACK_IMPORTED_MODULE_2__.getStorage)());
 /******/ })()
 ;
 //# sourceMappingURL=bundle.js.map
