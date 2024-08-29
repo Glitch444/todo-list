@@ -8,10 +8,11 @@
 }
 
 #main-container {
-    height: 100vh;
+    height: 100dvh;
     background-color: #f7f7bb;
     display: flex;
     flex-direction: column;
+    
 }
 
 #head-container {
@@ -36,15 +37,12 @@
     border: 1px solid blue;
 }
 
-#add-group{
-    display: none;
-}
 
 
 
 #add-list-item {
     border: 1px solid red;
-    display: none;
+
 }
 
 

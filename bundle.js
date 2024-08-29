@@ -217,81 +217,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.css */ "./src/style.css");
 /* harmony import */ var _ListItem_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ListItem.js */ "./src/ListItem.js");
 /* harmony import */ var _storage_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./storage.js */ "./src/storage.js");
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
-function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
-function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
-function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
-function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 
 
 
-var listGroups = document.getElementById("list-groups");
-var addGroupBtn = document.getElementById("add-group");
-var showHideBtn = document.getElementById("show-hide-btn");
-var addListItem = document.getElementById("add-list-item");
 var listItemInput = document.getElementById("list-item-input");
 var saveBtn = document.getElementById("save-btn");
 var clearBtn = document.getElementById("clear-btn");
-var list = document.getElementById("list");
-var Group = /*#__PURE__*/function () {
-  function Group() {
-    var title = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : Group.generateGroupName();
-    var id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-    _classCallCheck(this, Group);
-    this.title = title;
-    this.id = id || this.generateUniqueId();
-    this.groupDiv = null;
-    this.groupP = null;
-    this.saveBtn = null;
-  }
-  return _createClass(Group, [{
-    key: "generateUniqueId",
-    value: function generateUniqueId() {
-      return "group-" + Date.now() + "-" + Math.floor(Math.random() * 1000);
-    }
-  }, {
-    key: "displayGroup",
-    value: function displayGroup(listGroups) {
-      this.groupDiv = document.createElement("div");
-      this.groupP = document.createElement("p");
-      this.groupDiv.dataset.id = this.id;
-      this.groupDiv.classList.add("group-div");
-      this.groupP.textContent = this.title;
-      this.saveBtn = document.createElement("button");
-      this.saveBtn.textContent = "save";
-      this.groupDiv.appendChild(this.groupP);
-      this.groupDiv.appendChild(this.saveBtn);
-      listGroups.appendChild(this.groupDiv);
-      this.groupDiv.draggable = true;
-    }
-  }], [{
-    key: "updateGroupCounter",
-    value: function updateGroupCounter() {
-      var groupDivs = document.querySelectorAll(".group-div");
-      return groupDivs.length;
-    }
-  }, {
-    key: "generateGroupName",
-    value: function generateGroupName() {
-      var groupCounter = Group.updateGroupCounter();
-      return "Untitled-".concat(groupCounter + 1);
-    }
-  }]);
-}();
-function updateAddGroupButtonVisibility() {
-  var groupDivs = document.querySelectorAll(".group-div");
-  addGroupBtn.style.display = groupDivs.length > 0 ? "block" : "none";
-}
-showHideBtn.addEventListener("click", function () {
-  if (addListItem.style.display === "none" || addListItem.style.display === "") {
-    addListItem.style.display = "flex";
-    showHideBtn.textContent = "Don't add new item";
-  } else {
-    addListItem.style.display = "none";
-    showHideBtn.textContent = "Add new item";
-  }
-});
+var list = document.getElementById("list-container");
 clearBtn.addEventListener("click", function () {
   listItemInput.value = "";
 });
@@ -305,7 +237,6 @@ saveBtn.addEventListener("click", function () {
   (0,_storage_js__WEBPACK_IMPORTED_MODULE_2__.saveStorage)(myStorage);
   newListItem.display();
   addDragAndDropToListItems();
-  newGroup();
 });
 var draggedItem = null;
 function addDragAndDropToListItems() {
@@ -335,40 +266,10 @@ function addDragAndDropToListItems() {
     }
   });
 }
-function addDragAndDropToGroups() {
-  var groups = document.querySelectorAll(".group-div");
-  groups.forEach(function (group) {
-    group.draggable = true;
-    group.addEventListener("dragstart", function (event) {
-      draggedItem = event.target;
-    });
-  });
-  listGroups.addEventListener("dragstart", function (event) {
-    draggedItem = event.target.closest(".group-div");
-    event.dataTransfer.effectAllowed = "move";
-  });
-  listGroups.addEventListener("dragover", function (event) {
-    event.preventDefault();
-    event.dataTransfer.dropEffect = "move";
-  });
-  listGroups.addEventListener("drop", function (event) {
-    event.preventDefault();
-    if (event.target.closest(".group-div")) {
-      var targetGroup = event.target.closest(".group-div");
-      if (draggedItem !== targetGroup) {
-        reorderGroups(draggedItem, targetGroup);
-        updateGroupStorage();
-      }
-    }
-  });
-}
 function updateLocalStorage() {
   (0,_storage_js__WEBPACK_IMPORTED_MODULE_2__.saveStorage)((0,_storage_js__WEBPACK_IMPORTED_MODULE_2__.getStorage)());
 }
 ;
-function updateGroupStorage() {
-  (0,_storage_js__WEBPACK_IMPORTED_MODULE_2__.saveGroups)((0,_storage_js__WEBPACK_IMPORTED_MODULE_2__.getGroups)());
-}
 function reorderItems(draggedItem, targetItem) {
   var draggedIndex = Array.from(list.children).indexOf(draggedItem);
   var targetIndex = Array.from(list.children).indexOf(targetItem);
@@ -390,68 +291,12 @@ function reorderItems(draggedItem, targetItem) {
   myStorage.splice(targetIndexInStorage, 0, draggedData);
   (0,_storage_js__WEBPACK_IMPORTED_MODULE_2__.saveStorage)(myStorage);
 }
-function reorderGroups(draggedGroup, targetGroup) {
-  var draggedIndex = Array.from(listGroups.children).indexOf(draggedGroup);
-  var targetIndex = Array.from(listGroups.children).indexOf(targetGroup);
-  if (draggedIndex > targetIndex) {
-    listGroups.insertBefore(draggedGroup, targetGroup);
-  } else {
-    listGroups.insertBefore(draggedGroup, targetGroup.nextSibling);
-  }
-  var draggedId = draggedGroup.dataset.id;
-  var targetId = targetGroup.dataset.id;
-  var draggedData = (0,_storage_js__WEBPACK_IMPORTED_MODULE_2__.getGroups)().find(function (group) {
-    return group.id === draggedId;
-  });
-  var targetIndexInStorage = (0,_storage_js__WEBPACK_IMPORTED_MODULE_2__.getGroups)().findIndex(function (group) {
-    return group.id === targetId;
-  });
-  var myGroups = (0,_storage_js__WEBPACK_IMPORTED_MODULE_2__.getGroups)();
-  myGroups.splice(myGroups.indexOf(draggedData), 1);
-  myGroups.splice(targetIndexInStorage, 0, draggedData);
-  (0,_storage_js__WEBPACK_IMPORTED_MODULE_2__.saveGroups)(myGroups);
-}
-var isGroups = false;
-function newGroup() {
-  if (!isGroups) {
-    isGroups = true;
-    var _newGroup = new Group();
-    _newGroup.displayGroup(listGroups);
-    var myGroups = (0,_storage_js__WEBPACK_IMPORTED_MODULE_2__.getGroups)();
-    myGroups.push({
-      title: _newGroup.title,
-      id: _newGroup.id
-    });
-    (0,_storage_js__WEBPACK_IMPORTED_MODULE_2__.saveGroups)(myGroups);
-    updateAddGroupButtonVisibility();
-  }
-}
-;
-addGroupBtn.addEventListener("click", function () {
-  var anotherGroup = new Group();
-  anotherGroup.displayGroup(listGroups);
-  var myGroups = (0,_storage_js__WEBPACK_IMPORTED_MODULE_2__.getGroups)();
-  myGroups.push({
-    title: anotherGroup.title,
-    id: anotherGroup.id
-  });
-  (0,_storage_js__WEBPACK_IMPORTED_MODULE_2__.saveGroups)(myGroups);
-  updateAddGroupButtonVisibility();
-});
 (0,_storage_js__WEBPACK_IMPORTED_MODULE_2__.getStorage)().forEach(function (item) {
   var listItem = new _ListItem_js__WEBPACK_IMPORTED_MODULE_1__.ListItem(item.body, item.id, list);
-  listItem.display(listGroups);
-});
-(0,_storage_js__WEBPACK_IMPORTED_MODULE_2__.getGroups)().forEach(function (group) {
-  var listGroup = new Group(group.title, group.id);
-  console.log(listGroup);
-  listGroup.displayGroup(listGroups);
+  listItem.display(listItem);
 });
 addDragAndDropToListItems();
-addDragAndDropToGroups();
-updateAddGroupButtonVisibility();
 console.log((0,_storage_js__WEBPACK_IMPORTED_MODULE_2__.getStorage)());
-console.log((0,_storage_js__WEBPACK_IMPORTED_MODULE_2__.getGroups)());
 /******/ })()
 ;
 //# sourceMappingURL=bundle.js.map
