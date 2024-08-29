@@ -8,7 +8,7 @@ module.exports = {
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
-    publicPath: '/',
+    publicPath: '',
   },
 
   module: {
@@ -56,7 +56,7 @@ module.exports = {
     hot: true,
   },
 
-  mode: 'production',
+  mode: 'development',
 
   devtool: 'source-map', // Enables source maps for easier debugging
 };
