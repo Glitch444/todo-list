@@ -29,11 +29,13 @@ var ListItem = /*#__PURE__*/function () {
     this.id = id || this.generateUniqueId();
     this.displayDiv = null;
     this.displayP = null;
+    this.buttonDiv = null;
     this.saveBtn = null;
     this.editBtn = null;
     this.removeBtn = null;
     this.displayInput = null;
     this.list = list;
+    this.isInputActive = false;
   }
   return _createClass(ListItem, [{
     key: "generateUniqueId",
@@ -46,20 +48,23 @@ var ListItem = /*#__PURE__*/function () {
       var _this = this;
       this.displayDiv = document.createElement("div");
       this.displayP = document.createElement("p");
+      this.buttonDiv = document.createElement("div");
       this.saveBtn = document.createElement("button");
       this.editBtn = document.createElement("button");
       this.removeBtn = document.createElement("button");
       this.list.appendChild(this.displayDiv);
       this.displayDiv.appendChild(this.displayP);
-      this.displayDiv.appendChild(this.saveBtn);
-      this.displayDiv.appendChild(this.editBtn);
-      this.displayDiv.appendChild(this.removeBtn);
+      this.displayDiv.append(this.buttonDiv);
+      this.buttonDiv.appendChild(this.editBtn);
+      this.buttonDiv.appendChild(this.saveBtn);
+      this.buttonDiv.appendChild(this.removeBtn);
+      this.buttonDiv.classList.add("button-div");
       this.displayDiv.classList.add("display-div");
       this.displayDiv.dataset.id = this.id;
       this.displayP.textContent = this.body;
       this.saveBtn.textContent = "save";
       this.editBtn.textContent = "edit";
-      this.removeBtn.textContent = "X";
+      this.removeBtn.textContent = "clear";
       this.removeBtn.addEventListener("click", function () {
         _this.displayDiv.remove();
         var myStorage = (0,_storage_js__WEBPACK_IMPORTED_MODULE_0__.getStorage)();
@@ -78,11 +83,14 @@ var ListItem = /*#__PURE__*/function () {
   }, {
     key: "edit",
     value: function edit(displayDiv, displayP) {
-      this.displayInput = document.createElement("input");
-      this.displayInput.value = displayP.textContent;
-      displayDiv.prepend(this.displayInput);
-      displayP.remove();
-      return this.displayInput;
+      if (!this.isInputActive) {
+        this.displayInput = document.createElement("input");
+        this.displayInput.value = displayP.textContent;
+        displayDiv.prepend(this.displayInput);
+        displayP.remove();
+        this.isInputActive = true;
+        return this.displayInput;
+      }
     }
   }, {
     key: "save",
@@ -97,6 +105,7 @@ var ListItem = /*#__PURE__*/function () {
       var storedItem = myStorage.find(function (item) {
         return item.id === _this2.id;
       });
+      this.isInputActive = false;
       if (storedItem) {
         storedItem.body = this.body;
         (0,_storage_js__WEBPACK_IMPORTED_MODULE_0__.saveStorage)(myStorage);

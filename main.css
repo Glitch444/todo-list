@@ -5,6 +5,8 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-size: 18px;
+    font-family: sans-serif;
     
 }
 
@@ -28,10 +30,11 @@ body {
 }
 
 h1 {
+    font-size: 2rem;
     border-radius: 10px 10px 0px 0px;
     background-color: hsl(0, 0%, 75%);
     text-align: center;
-    padding: 0px;
+    padding: 5px 0px;
     margin-bottom: 10px;
 }
 
@@ -43,23 +46,61 @@ h1 {
 
 
 #add-list-item-container {
+    display: flex;
     margin-bottom: 20px;
 }
 
+#list-item-input {
+    width: 100%;
+    border: none;
+    padding-left: 10px;
+}
+
+
+
+
 #list-container {
-    
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 10px;
 }
+
+
 
 
 .display-div {
-    padding: 5px;
-    border: 1px solid blue;
     display: flex;
-    gap: 4px;
+    align-items: center;
+    background-color: white;
+    padding-left: 10px;
 }
 
+.button-div {
+    display: flex;
+    margin-left: auto;
+}
+.button-div button,
+#save-btn,
+#clear-btn {
+    padding: 5px 10px;
+    border: none;
+    transition: all 0.5s ease-in-out;
+}
+
+.button-div button:nth-child(1):hover,
+#save-btn:hover{
+    background-color: red;
+    color: white
+}
+
+.button-div button:nth-child(2):hover {
+    background-color: blue;
+    color: white;
+}
+.button-div button:nth-child(3):hover,
+#clear-btn:hover {
+    background-color: black;
+    color: white
+}
 
 /*# sourceMappingURL=main.css.map*/
